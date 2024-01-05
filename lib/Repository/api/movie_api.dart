@@ -14,7 +14,7 @@ class MovieApi {
 
 
   Future<MovieModel> getMovie() async {
-    String trendingpath = 'https://imdb-top-100-movies.p.rapidapi.com/';
+    String trendingpath = 'https://imdb-top-100-movies.p.rapidapi.com/top32';
     var body = {
 
     };

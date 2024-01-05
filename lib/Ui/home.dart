@@ -10,57 +10,64 @@ class Home extends StatefulWidget {
   @override
   State<Home> createState() => _HomeState();
 }
+
 late MovieModel data;
+
 class _HomeState extends State<Home> {
   @override
   void initState() {
     BlocProvider.of<MovieBloc>(context).add(FetchMovie());
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: BlocBuilder<MovieBloc, MovieState>(
-  builder: (context, state) {
-      if (state is MovieBlocLoading){
-        return Center(child: CircularProgressIndicator(),);
-      }
-      if (state is MovieBlocError){
-        return Center(child: Text("ERROR"),);
-      }
-      if (state is MovieBlocLoaded){
-        data=BlocProvider.of<MovieBloc>(context).movieModel;
+            builder: (context, state) {
+              if (state is MovieBlocLoading) {
+                return Center(child: CircularProgressIndicator(),);
+              }
+              if (state is MovieBlocError) {
+                return Center(child: Text("ERROR"),);
+              }
+              if (state is MovieBlocLoaded) {
+                data = BlocProvider
+                    .of<MovieBloc>(context)
+                    .movieModel;
 
 
-      itemBuilder: (BuildContext context, int index) {
-        return Container(
-          height: 80,color: Colors.red,
-          child: Row(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: SizedBox(
-                  width: 50,
-                  height: 50,
-                  child: Image.network(data.image.toString()),
-                ),
-              ),
-              Column(crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(data.title.toString()),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(data.genre.toString()),
-                ],
-              )
-            ],
-          ),
-        );
-     };
 
-  }else{
-    return SizedBox();
-    }}));
+                  return Container(
+                    height: 80, color: Colors.red,
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 10),
+                          child: SizedBox(
+                            width: 50,
+                            height: 50,
+                            child: Image.network(data.thumbnail.toString()),
+                          ),
+                        ),
+                        Column(crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(data.title.toString()),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(data.rating.toString()),
+                          ],
+                        )
+                      ],
+                    ),
+                  );
+
+              } else {
+                return SizedBox();
+              }
+            },
+        )
+    );
   }
 }
